@@ -43,18 +43,18 @@ Most of these fields should be self-explanatory. The next "size" bytes after thi
 === Field types ===
 Fields may be any of the following types (types marked with a `*` are not implemented in NDEPHP yet):
 || *ID* || *Type name* || 
-|| 0 || Column ||
+|| 0 || [http://code.google.com/p/ndephp/wiki/NDEFormat#Column Column] ||
 || 1`*` || Index ||
 || 2`*` || Redirector ||
-|| 3 || String ||
-|| 4 || Integer ||
+|| 3 || [http://code.google.com/p/ndephp/wiki/NDEFormat#String String] ||
+|| 4 || [http://code.google.com/p/ndephp/wiki/NDEFormat#Integer Integer] ||
 || 5`*` || Boolean ||
 || 6`*` || Binary ||
 || 7`*` || GUID ||
 || 8`*` || Unknown ||
 || 9`*` || Float ||
-|| 10 || Date and time ||
-|| 11 || Length ||
+|| 10 || [http://code.google.com/p/ndephp/wiki/NDEFormat#Integer Date and time] ||
+|| 11 || [http://code.google.com/p/ndephp/wiki/NDEFormat#Integer Length] ||
 
 The field type are explained in more detail below. Offsets are relative to the *start* of the field.
 ==== Column ====
