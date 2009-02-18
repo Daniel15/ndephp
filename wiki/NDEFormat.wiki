@@ -1,6 +1,7 @@
 #summary Information about the format used in NDE (Nullsoft Database Engine) files.
 #labels Featured
 
+<wiki:toc />
 = Introduction =
 
 This page describes the *Nullsoft Database Engine* format.
@@ -64,14 +65,22 @@ The field type are explained in more detail below. Offsets are relative to the *
 || 2 || Unsigned char || 1 || Size of column name ||
 || 3 || String || Size (offset 2, above) || Name of the column || 
 
+[http://code.google.com/p/ndephp/wiki/NDEFormat#Field_types Back to field types listing]
+
 ==== String ====
 || *Offset* || *Data Type* || *Size* || *Field* || 
 || 0 || Unsigned short || 2 || Size of the string ||
 || 2 || String || Size || String value ||
 
-==== Integer, Date and time, and Length  ====
+[http://code.google.com/p/ndephp/wiki/NDEFormat#Field_types Back to field types listing]
+
+==== Integer ====
+The integer format is also used for the  Date and time, and Length types. A length is simply an integer that represents the length of something, and a Date and time is simply a UNIX timestamp.
+
 || *Offset* || *Data Type* || *Size* || *Field* || 
 || 0 || Integer || 4 || Value ||
+
+[http://code.google.com/p/ndephp/wiki/NDEFormat#Field_types Back to field types listing]
 
 = How to read the files =
 Below is some psuedocode showing how to read these files:
