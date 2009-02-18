@@ -110,3 +110,8 @@ End For each
 
 // You've now read the whole file and have all the data
 </pre>
+
+= References =
+The following references were used for obtaining this data:
+ * [http://gutenberg.free.fr/fichiers/SDK%20Winamp/nde_specs_v1.txt Nullsoft Database Engine Format Specifications v1.0] (some things have changed slightly since this was published)
+ * [http://translate.google.com/translate?hl=en&sl=de&u=http://itavenue.de/java/mlremote-oder-die-winamp-media-library mlRemote or: The Winamp Media Library] (converted from German)
