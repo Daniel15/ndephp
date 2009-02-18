@@ -64,11 +64,40 @@ The field type are explained in more detail below. Offsets are relative to the *
 || 2 || Unsigned char || 1 || Size of column name ||
 || 3 || String || Size (offset 2, above) || Name of the column || 
 
-=== String ===
+==== String ====
 || *Offset* || *Data Type* || *Size* || *Field* || 
 || 0 || Unsigned short || 2 || Size of the string ||
 || 2 || String || Size || String value ||
 
-=== Integer, Date and time, and Length  ===
+==== Integer, Date and time, and Length  ====
 || *Offset* || *Data Type* || *Size* || *Field* || 
 || 0 || Integer || 4 || Value ||
+
+= How to read the files =
+Below is some psuedocode showing how to read these files:
+<pre>
+Open index file
+Open data file
+Read header of index file
+Read header of data file
+
+For each record in the index file
+	Start with a blank record
+	Set offset variable to offset specified in index file
+	Loop
+		Get the data from the data file at the specified offset
+		Add this data to the record
+		Set offset variable to "next field" in the field data
+	While offset is not 0
+
+	// "Record" now contains the record you just read in.
+
+	If record is a "column" type
+		Store the column names in a columns variable
+	Else
+		Store the data based on column names in columns variable
+	End if
+End For each
+
+// You've now read the whole file and have all the data
+</pre>
