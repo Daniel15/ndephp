@@ -38,7 +38,7 @@ Fields have a header like the following:
 || 6 || Integer || 4 || Offset to next field in this record ||
 || 10 || Integer || 4 || Offset to previous field ?? (I don't use this) ||
 
-Most of these fields should be self-explanatory. The next "size" bytes after this header is the actual field data (eg. if "size" is 20, then the next 20 bytes is the actual data).
+Most of these fields should be self-explanatory. The next "size" bytes after this header is the actual field data (eg. if "size" is 20, then the next 20 bytes is the actual data). If the field is a "column" type, the Column ID tells you what ID this column is (first column is 1, second column is 2, etc). Otherwise, the Column ID tells you what column this data is in.
 
 === Field types ===
 Fields may be any of the following types (types marked with a `*` are not implemented in NDEPHP yet):
