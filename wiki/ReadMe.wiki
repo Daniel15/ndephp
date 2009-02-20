@@ -1,16 +1,16 @@
 #summary Readme for NDEPHP
 #labels Featured
 
- = Introduction = 
+= Introduction = 
 Winamp uses a system called the "Nullsoft Database Engine" to store some of its data, the main one being the media library (main.dat and main.idx files). This script will let you read these databases in PHP.
 
 This is still beta, please report any problems at https://ndephp.googlecode.com/
 
- = Requirements = 
+= Requirements = 
  * PHP 5 (this script makes use of PHP 5's OOP features)
  * iconv extension (http://au.php.net/iconv)
  
- = Use =
+= Use =
 NOTE: This script is still in BETA, so the names of these functions may change in the future.
 
 This script has two main classes that you'll want to use. Which one you use depends on what database file you want to read. NDEDatabase is the main class, and is used in your script like this:
