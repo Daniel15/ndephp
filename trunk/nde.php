@@ -98,7 +98,7 @@ class NDEData
 	 */ 
 	function get_record($offset, $index)
 	{
-		$record = new NDERecord();
+		$record = new NDEFileRecord();
 		
 		NDEDatabase::debug_msg('<strong>Record:</strong><br />');
 
@@ -140,18 +140,13 @@ class NDEData
 		
 		// Otherwise, it's a song!
 		// We need to store all the data stuffs
-		$song = new NDESong();
+		$song = new NDERecord();
 		
 		foreach ($record->fields as $field)
 		{
 			$variable = $this->columns[$field->id];
 			$song->$variable = $field->data->data;
 		}
-		// Check if some important ones were set
-		if (!isset($song->artist))
-			$song->artist = null;
-		if (!isset($song->title))
-			$song->title = null;
 		
 		return $song;
 	}
@@ -173,7 +168,7 @@ class NDEDatabase
 	// Set this to true to get too much debugging info (go on, try it). :P
 	const debug = false;
 
-	private $songs;
+	protected $records;
 	
 	/**
 	 * Creates a new instance of the NDEDatabase class.
@@ -196,18 +191,29 @@ class NDEDatabase
 			NDEDatabase::debug_msg('<strong>Read ' . $i . ':</strong> offset = ' . $index_data['offset'] . ', index = ' . $index_data['index'] . '... <br />');
 			// Now, get the data associated with this index.
 			$data = $this->data->get_record($index_data['offset'], $index_data['index']);
-			// Was it a song?
-			if ($data instanceOf NDESong)
-				$this->songs[] = $data;
+			// Was it a record? If so, process it.
+			if ($data instanceOf NDERecord)
+				$this->_process_record($data);
 		}
+	}
+	
+	/**
+	 * Add a record to our array. Defined as a function so that other classes
+	 * can extend it.
+	 */
+	protected function _process_record($record)
+	{
+		$this->records[] = $record;
+		// Return the index of the new record.
+		return count($this->records) - 1;
 	}
 	
 	/**
 	 * Getter method for $songs. Returns the songs in the database.
 	 */
-	public function songs()
+	public function records()
 	{
-		return $this->songs;
+		return $this->records;
 	}
 	
 	/**
