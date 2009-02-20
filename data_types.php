@@ -8,15 +8,16 @@
 /**
  * A record is basically some fields. As you can see here. :P
  */
-class NDERecord
+class NDEFileRecord
 {
 	var $fields;
 }
 
 /**
- * A song. Nothing's here, look at NDEDatabase::__construct
+ * A record, our internal representation. Nothing's here, look at
+ * NDEDatabase::__construct
  */
-class NDESong
+class NDERecord
 {
 
 }
