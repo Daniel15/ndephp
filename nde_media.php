@@ -2,7 +2,7 @@
 /**
  * NDE (Nullsoft Database Engine) in PHP 
  * By Daniel15 - http://www.d15.biz/
- * $Id: data_types.php 2 2009-02-18 08:25:23Z daniel@d15.biz $
+ * $Id$
  */
 
 require('nde.php');
