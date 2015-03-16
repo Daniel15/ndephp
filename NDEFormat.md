@@ -6,16 +6,19 @@ This page describes the **Nullsoft Database Engine** format.
 Tables are saved using two different files. _filename.dat_ contains the actual data, and _filename.idx_ contains an index used to access this data.
 
 # Index format #
+
 The index file has a header as follows:
-| **Offset** | **Data Type** | **Size** | **Field** |
-|:-----------|:--------------|:---------|:----------|
+
+| Offset | Data Type | Size | Field |
+|--------|-----------|------|-------|
 | 0 | String | 8 | "NDEINDEX" |
 | 8 | Integer | 4 | Number of records |
 | 12 | Integer | 4 | Unknown (always seems to be 0xFF 0x00 0x00 0x00) |
 
 The rest of the file is the index itself. Each record consists of two integers:
-| **Offset** | **Data Type** | **Size** | **Field** |
-|:-----------|:--------------|:---------|:----------|
+
+| Offset | Data Type | Size | Field |
+|-----------|--------------|---------|----------|
 | 0 | Integer | 4 | Offset of this record in the data file |
 | 4 | Integer | 4 | Index of this record |
 
@@ -31,8 +34,9 @@ There are a few "special" types of records in the index file:
 
 ## Fields ##
 Fields have a header like the following:
-| **Offset** | **Data Type** | **Size** | **Field** |
-|:-----------|:--------------|:---------|:----------|
+
+| Offset | Data Type | Size | Field |
+|--------|-----------|------|-------|
 | 0 | Unsigned char | 1 | Column ID |
 | 1 | Unsigned char | 1 | Field type |
 | 2 | Integer | 4 | Size of field data |
@@ -43,77 +47,75 @@ Most of these fields should be self-explanatory. The next "size" bytes after thi
 
 ### Field types ###
 Fields may be any of the following types (types marked with a `*` are not implemented in NDEPHP yet):
-| **ID** | **Type name** |
+
+| ID | Type name |
 |:-------|:--------------|
-| 0 | [Column](http://code.google.com/p/ndephp/wiki/NDEFormat#Column) |
+| 0 | [Column](#Column) |
 | 1`*` | Index |
 | 2`*` | Redirector |
-| 3 | [String](http://code.google.com/p/ndephp/wiki/NDEFormat#String) |
-| 4 | [Integer](http://code.google.com/p/ndephp/wiki/NDEFormat#Integer) |
+| 3 | [String](#String) |
+| 4 | [Integer](#Integer) |
 | 5`*` | Boolean |
 | 6`*` | Binary |
 | 7`*` | GUID |
 | 8`*` | Unknown |
 | 9`*` | Float |
-| 10 | [Date and time](http://code.google.com/p/ndephp/wiki/NDEFormat#Integer) |
-| 11 | [Length](http://code.google.com/p/ndephp/wiki/NDEFormat#Integer) |
+| 10 | [Date and time](#Integer) |
+| 11 | [Length](#Integer) |
 
 The field type are explained in more detail below. Offsets are relative to the **start** of the field.
+<a id="Column" />
 #### Column ####
-| **Offset** | **Data Type** | **Size** | **Field** |
-|:-----------|:--------------|:---------|:----------|
+
+| Offset | Data Type | Size | Field |
+|--------|-----------|------|-------|
 | 0 | Unsigned char | 1 | Column field type (see list above) |
 | 1 | Unsigned char | 1 | Index unique values ?? (unknown what this does) |
 | 2 | Unsigned char | 1 | Size of column name |
 | 3 | String | Size (offset 2, above) | Name of the column |
 
-[Back to field types listing](http://code.google.com/p/ndephp/wiki/NDEFormat#Field_types)
-
+<a id="String" />
 #### String ####
-| **Offset** | **Data Type** | **Size** | **Field** |
-|:-----------|:--------------|:---------|:----------|
+| Offset | Data Type | Size | Field |
+|--------|-----------|------|-------|
 | 0 | Unsigned short | 2 | Size of the string |
 | 2 | String | Size | String value |
 
-[Back to field types listing](http://code.google.com/p/ndephp/wiki/NDEFormat#Field_types)
-
+<a id="Integer" />
 #### Integer ####
 The integer format is also used for the  Date and time, and Length types. A length is simply an integer that represents the length of something, and a Date and time is simply a UNIX timestamp.
 
-| **Offset** | **Data Type** | **Size** | **Field** |
-|:-----------|:--------------|:---------|:----------|
+| Offset | Data Type | Size | Field |
+|--------|-----------|------|-------|
 | 0 | Integer | 4 | Value |
 
-[Back to field types listing](http://code.google.com/p/ndephp/wiki/NDEFormat#Field_types)
 
 # How to read the files #
 Below is some psuedocode showing how to read these files:
-<pre>
-Open index file<br>
-Open data file<br>
-Read header of index file<br>
-Read header of data file<br>
-<br>
-For each record in the index file<br>
-Start with a blank record<br>
-Set offset variable to offset specified in index file<br>
-Loop<br>
-Get the data from the data file at the specified offset<br>
-Add this data to the record<br>
-Set offset variable to "next field" in the field data<br>
-While offset is not 0<br>
-<br>
-// "Record" now contains the record you just read in.<br>
-<br>
-If record is a "column" type<br>
-Store the column names in a columns variable<br>
-Else<br>
-Store the data based on column names in columns variable<br>
-End if<br>
-End For each<br>
-<br>
-// You've now read the whole file and have all the data<br>
-</pre>
+```
+Open index file
+Open data file
+Read header of index file
+Read header of data file
+For each record in the index file
+  Start with a blank record
+  Set offset variable to offset specified in index file
+  Loop
+    Get the data from the data file at the specified offset
+    Add this data to the record
+    Set offset variable to "next field" in the field data
+  While offset is not 0
+  // "Record" now contains the record you just read in.
+
+  If record is a "column" type
+    Store the column names in a columns variable
+  Else
+    Store the data based on column names in columns variable
+  End if
+End For each
+
+// You've now read the whole file and have all the data
+```
 
 # References #
 The following references were used for obtaining this data:
