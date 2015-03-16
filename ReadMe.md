@@ -1,0 +1,53 @@
+# Introduction #
+Winamp uses a system called the "Nullsoft Database Engine" to store some of its data, the main one being the media library (main.dat and main.idx files). This script will let you read these databases in PHP.
+
+This is still beta, please report any problems at https://ndephp.googlecode.com/
+
+# Requirements #
+  * PHP 5 (this script makes use of PHP 5's OOP features)
+  * iconv extension (http://au.php.net/iconv)
+
+# Use #
+NOTE: This script is still in BETA, so the names of these functions may change in the future.
+
+This script has two main classes that you'll want to use. Which one you use depends on what database file you want to read. NDEDatabase is the main class, and is used in your script like this:
+```
+<?php
+require('nde.php');
+$database = new NDEDatabase('name');
+$records = $database->records();
+// $records is now an array with all the database records.
+?>
+```
+
+This will load the "name" database (which uses the "name.idx" and "name.dat"
+files), and get all the records. This class should work for all NDE databases
+(although it was mainly tested with the media library database).
+
+Additionally, there is a class for **just** the media library database. The basic
+functionality of this is used in the exact same way, just with the different
+class name (NDEMediaDatabase):
+
+```
+<?php
+require('nde_media.php');
+$database = new NDEMediaDatabase('main');
+$songs = $database->records();
+// $songs will now have all the songs in it
+?>
+```
+
+However, this class also has some additional functions. Currently, the only other function is to get songs only by a particular artist:
+
+```
+<?php
+// ... the above code goes here
+
+$cascada_songs = $database->artist('Cascada')->songs();
+// $cascada_songs will now have all the songs by Cascada.
+?>
+```
+
+An example script is in the "test.php" file, and another one in the "test2.php" file. To try these scripts, copy your main.dat and main.idx files (at C:\Documents and Settings\username\Application Data\Winamp\Plugins\ml on Windows XP) into the directory you put the script in, and then access the script in your web browser.
+
+Additional documentation and more features coming soon! ...maybe. :)
